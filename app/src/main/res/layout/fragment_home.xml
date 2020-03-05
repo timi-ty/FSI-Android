@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_userGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="8dp"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/rv_nearRestaurants"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline15"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_nearRestaurants"
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline16"
+            app:layout_constraintStart_toStartOf="@+id/guideline15"
+            app:layout_constraintTop_toBottomOf="@+id/txt_restaurant"
+            tools:itemCount="5">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_viewMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/rv_nearRestaurants"
+            app:layout_constraintTop_toBottomOf="@+id/rv_nearRestaurants" />
+
+        <ImageView
+            android:id="@+id/back_recentOrders"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_recentOrders"
+            app:layout_constraintEnd_toEndOf="@+id/rv_recentOrders"
+            app:layout_constraintStart_toStartOf="@+id/rv_recentOrders"
+            app:layout_constraintTop_toTopOf="@+id/rv_recentOrders"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/txt_recentOrders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingTop="8dp"
+            android:textColor="@android:color/secondary_text_light"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline15"
+            app:layout_constraintTop_toBottomOf="@+id/tv_viewMore" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recentOrders"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_recentOrders"
+            tools:itemCount="1"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.95" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
