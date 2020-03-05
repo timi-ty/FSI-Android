@@ -84,13 +84,11 @@
         android:layout_width="wrap_content"
         android:layout_height="140dp"
         android:layout_marginTop="16dp"
-        android:background="#8090BCB8"
         android:scaleType="centerCrop"
-        android:tint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/graph_placeholder" />
+        app:srcCompat="@drawable/build" />
 
     <ImageView
         android:id="@+id/imageView4"
