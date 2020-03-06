@@ -50,7 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:checked="true"
+        android:checked="false"
+        android:showText="false"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat.Body1"
         android:thumbTint="@color/cardview_dark_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toBottomOf="@+id/dots_indicator" />
@@ -85,8 +87,10 @@
         android:layout_width="wrap_content"
         android:layout_height="140dp"
         android:layout_marginTop="16dp"
+        android:background="#80FFFFFF"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:srcCompat="@drawable/build" />

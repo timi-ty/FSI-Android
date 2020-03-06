@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -97,7 +98,9 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TransactionViewHolder viewHolder, int position) {
-            viewHolder.bindView();
+            if(position == 1){
+                viewHolder.bindView();
+            }
         }
 
         @Override
@@ -107,13 +110,19 @@ public class HomeFragment extends Fragment {
 
 
         class TransactionViewHolder extends RecyclerView.ViewHolder{
+            TextView txtTransName;
+            TextView txtTransDate;
+            TextView txtTransAmount;
 
             TransactionViewHolder(@NonNull View itemView) {
                 super(itemView);
+                txtTransName = itemView.findViewById(R.id.txt_transName);
+                txtTransAmount = itemView.findViewById(R.id.txt_transAmount);
             }
 
             void bindView(){
-
+                txtTransName.setTextColor(getResources().getColor(R.color.colorAccent));
+                txtTransAmount.setTextColor(getResources().getColor(R.color.colorAccent));
             }
         }
     }
