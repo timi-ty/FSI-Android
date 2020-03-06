@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +22,7 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.MultiDetector;
 import com.google.android.gms.vision.MultiProcessor;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.gms.vision.text.TextBlock;
 import com.inc.fsi.fnn.R;
@@ -38,14 +40,23 @@ public class PayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragView = inflater.inflate(R.layout.fragment_pay, container, false);
 
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext()).build();
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext())
+                .setBarcodeFormats(Barcode.DATA_MATRIX | Barcode.QR_CODE)
+                .build();
         BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay);
         barcodeDetector.setProcessor(
                 new MultiProcessor.Builder<>(barcodeFactory).build() );
-//        barcodeDetector.setProcessor(
-//                Detector.Processor<>(barcodeFactory));
+        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+            @Override
+            public void release() {
 
+            }
 
+            @Override
+            public void receiveDetections(Detector.Detections<Barcode> detections) {
+
+            }
+        });
 
         mCameraSource = new CameraSource.Builder(getContext(), barcodeDetector)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)

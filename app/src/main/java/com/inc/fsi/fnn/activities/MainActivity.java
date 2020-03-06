@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             Log.d("Motion Event", "Touched At: (" + xOff + ", " + yOff + ", " + currentExpediency + ")");
 
             StringBuilder dataSet = new StringBuilder().append(xOff).append(",")
-                    .append(yOff).append(",").append(currentExpediency).append(",").append(1);
+                    .append(yOff).append(",").append(currentExpediency).append(",").append(0);
 
             if(file.exists()){
                 try {
