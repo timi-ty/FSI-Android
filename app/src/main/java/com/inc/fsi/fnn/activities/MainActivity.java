@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                             }
                         }).show();
             }
-        }, 1000 * 15);
+        }, 1000 * 35);
     }
 
     @Override
