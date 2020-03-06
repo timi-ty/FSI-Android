@@ -11,12 +11,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -91,6 +92,22 @@ public class PayFragment extends Fragment {
                 if(mCameraSource != null){
                     mCameraSource.stop();
                 }
+            }
+        });
+
+        final TextView name = fragView.findViewById(R.id.name);
+        final TextView status = fragView.findViewById(R.id.status);
+        final TextView status2 = fragView.findViewById(R.id.status2);
+        final ImageView face = fragView.findViewById(R.id.face);
+
+        fragView.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name.setText("Gadgets.IO Co.");
+                status.setText("$1300");
+                status2.setText("Caution! This amount is beyond this user's average.");
+
+                face.setImageResource(R.drawable.img_avatar2);
             }
         });
 

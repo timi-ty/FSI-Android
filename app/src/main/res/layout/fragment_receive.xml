@@ -33,24 +33,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:id="@+id/face"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
         android:layout_marginTop="64dp"
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:paddingStart="4dp"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5"
+        app:layout_constraintStart_toEndOf="@+id/face"
+        app:layout_constraintTop_toTopOf="@+id/face"
         tools:text="Timilehin Tayo" />
 
     <Button
@@ -60,17 +59,18 @@
         android:backgroundTint="@color/colorAccent"
         android:text="Accept"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintStart_toStartOf="@+id/textView9" />
+        app:layout_constraintBottom_toBottomOf="@+id/face"
+        app:layout_constraintStart_toStartOf="@+id/name" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="4dp"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        android:textColor="@color/colorError"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name"
         tools:text="Verified" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

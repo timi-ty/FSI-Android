@@ -1,6 +1,8 @@
 package com.inc.fsi.fnn.activities;
 
 import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import com.inc.fsi.fnn.R;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -19,6 +22,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -87,6 +91,24 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         touchCaptureLayer.setOnTouchListener(this);
 
         requestStoragePermission();
+
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setIcon(R.drawable.finger_print)
+                        .setTitle("Pattern Recognition is Flagging You")
+                        .setMessage("It looks like this isn't your account, you need extra authentication to continue.")
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                Intent signOut = new Intent(MainActivity.this, RegistrationActivity.class);
+                                startActivity(signOut);
+                                MainActivity.this.finish();
+                            }
+                        }).show();
+            }
+        }, 1000 * 15);
     }
 
     @Override
@@ -105,33 +127,33 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_messages) {
-            String strLine = null;
-            String []data ;
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
-            while (true)   {
-                try {
-                    if ((strLine = r.readLine()) == null) break;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                data = strLine.split(",");
-                String first = data[0];
-                String second = data[1];
-                String third = data[2];
-
-                Toast.makeText(this, first + ", " + second + ", " + third, Toast.LENGTH_SHORT).show();
-            }
-            try {
-                r.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            String strLine = null;
+//            String []data ;
+//            FileInputStream fis = null;
+//            try {
+//                fis = new FileInputStream(file);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+//            while (true)   {
+//                try {
+//                    if ((strLine = r.readLine()) == null) break;
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                data = strLine.split(",");
+//                String first = data[0];
+//                String second = data[1];
+//                String third = data[2];
+//
+//                Toast.makeText(this, first + ", " + second + ", " + third, Toast.LENGTH_SHORT).show();
+//            }
+//            try {
+//                r.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             return true;
         }
 
@@ -239,5 +261,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        getSupportActionBar().show();
+        super.onBackPressed();
     }
 }
