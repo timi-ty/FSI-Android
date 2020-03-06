@@ -1,5 +1,8 @@
 package com.inc.fsi.fnn.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
@@ -14,25 +17,57 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
+import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
     private FrameLayout touchCaptureLayer;
     private long lastTouchTime;
     private float currentExpediency;
     NavController navController;
+    File file;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        File fileDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator +"TouchData");
+        if(!fileDir.exists()){
+            try{
+                boolean result = fileDir.mkdir();
+
+                Log.d("make directory", "result = " + result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator +"TouchData"+File.separator+"DataSheet.txt");
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         touchCaptureLayer = findViewById(R.id.frame_gestureCapture);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         initializeSideNav(toolbar);
 
         touchCaptureLayer.setOnTouchListener(this);
+
+        requestStoragePermission();
     }
 
     @Override
@@ -68,6 +105,33 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_messages) {
+            String strLine = null;
+            String []data ;
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BufferedReader r = new BufferedReader(new InputStreamReader(fis));
+            while (true)   {
+                try {
+                    if ((strLine = r.readLine()) == null) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                data = strLine.split(",");
+                String first = data[0];
+                String second = data[1];
+                String third = data[2];
+
+                Toast.makeText(this, first + ", " + second + ", " + third, Toast.LENGTH_SHORT).show();
+            }
+            try {
+                r.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -114,7 +178,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.side_nav_pay:
-                        /*Start camera activity*/
+                        getSupportActionBar().hide();
+                        navController.navigate(R.id.PayFragment);
                         drawerLayout.closeDrawers();
                         break;
                     default:
@@ -134,8 +199,45 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             currentExpediency = 1.0f/(event.getDownTime() - lastTouchTime);
             lastTouchTime = event.getDownTime();
             Log.d("Motion Event", "Touched At: (" + xOff + ", " + yOff + ", " + currentExpediency + ")");
+
+            StringBuilder dataSet = new StringBuilder().append(xOff).append(",")
+                    .append(yOff).append(",").append(currentExpediency).append(",").append(1);
+
+            if(file.exists()){
+                try {
+                    FileWriter fileWriter  = new FileWriter(file, true);
+                    BufferedWriter bfWriter = new BufferedWriter(fileWriter);
+                    bfWriter.newLine();
+                    bfWriter.write(dataSet.toString());
+                    bfWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             return false;
         }
         return false;
+    }
+
+    private final int RC_PERMISSION_STORAGE = 9001;
+
+    private boolean requestStoragePermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                            PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        RC_PERMISSION_STORAGE);
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        RC_PERMISSION_STORAGE);
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        return true;
     }
 }

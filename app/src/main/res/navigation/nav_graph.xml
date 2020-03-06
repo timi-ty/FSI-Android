@@ -25,4 +25,8 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/PayFragment"
+        android:name="com.inc.fsi.fnn.fragments.PayFragment"
+        android:label="PayFragment" />
 </navigation>
