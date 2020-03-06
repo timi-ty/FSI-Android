@@ -57,15 +57,17 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         String name = etvName.getText().toString();
         String id = etvPhone.getText().toString();
 
-        if(name.equals("") || name.contains(" ")){
+        if(!name.equals("timi")){
             etvName.setHint("Invalid username");
             etvName.setHintTextColor(getResources().getColor(R.color.colorError));
+            etvName.setText("");
             isVerified = false;
         }
 
-        if(id.equals("") || id.contains(" ")){
-            etvPhone.setHint("Invalid phone number");
+        if(!id.equals("timi32")){
+            etvPhone.setHint("Invalid password");
             etvPhone.setHintTextColor(getResources().getColor(R.color.colorError));
+            etvPhone.setText("");
             isVerified = false;
         }
 
