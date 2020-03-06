@@ -12,9 +12,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.inc.fsi.fnn.R;
 import com.inc.fsi.fnn.utils.ImageHelper;
+
+import org.w3c.dom.Text;
+
+import java.security.SecureRandom;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,9 @@ public class CardFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static final String DATA_FOR_RANDOM_STRING = "0123456789";
+    private static SecureRandom random = new SecureRandom();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -58,10 +66,33 @@ public class CardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View fragView = inflater.inflate(R.layout.item_card, container);
         Bitmap backBitmap = ImageHelper.getRoundedCornerBitmap(BitmapFactory
-                .decodeResource(getResources(), R.drawable.card_back), 256);
+                .decodeResource(getResources(), R.drawable.card_back), 64);
         ConstraintLayout layout = fragView.findViewById(R.id.cardLayout);
         Drawable background = new BitmapDrawable(getResources(), backBitmap);
         layout.setBackground(background);
+
+        TextView txtCardNumber = fragView.findViewById(R.id.txt_cardNumber);
+        TextView txtCardAmount = fragView.findViewById(R.id.txt_cardBalance);
+
+        txtCardNumber.setText(generateRandomString(16));
+        String amount = generateRandomString(4);
+        StringBuilder am = new StringBuilder(amount);
+        am.insert(1, ",").insert(0, "$");
+        txtCardAmount.setText(am);
+
         return fragView;
+    }
+
+    private static String generateRandomString(int length) {
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int rndCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
+            char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
+            sb.append(rndChar);
+            if ((i + 1) % 4 == 0 && i != length - 1) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 }

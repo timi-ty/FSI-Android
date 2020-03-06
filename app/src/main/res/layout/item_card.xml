@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/colorBackground"
-    app:contentPadding="8dp">
+    app:cardElevation="10dp"
+    app:contentPadding="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardLayout"
@@ -20,14 +21,14 @@
             android:layout_height="wrap_content"
             android:text=".... .... .... 1234"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="96dp"
-            android:layout_height="64dp"
+            android:layout_width="64dp"
+            android:layout_height="42dp"
             android:tint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txt_cardNumber"
@@ -61,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="05/23"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/txt_cardBalance"
             app:layout_constraintEnd_toEndOf="@+id/imageView" />
     </androidx.constraintlayout.widget.ConstraintLayout>

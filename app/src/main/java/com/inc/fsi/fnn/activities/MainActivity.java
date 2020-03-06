@@ -11,23 +11,45 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
+    private FrameLayout touchCaptureLayer;
+    private long lastTouchTime;
+    private float currentExpediency;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        touchCaptureLayer = findViewById(R.id.frame_gestureCapture);
         Toolbar toolbar = findViewById(R.id.toolbar);
+
+        FragmentContainerView navHostFragment = findViewById(R.id.nav_host_fragment);
+
+        navController = Navigation.findNavController(navHostFragment);
+
         setSupportActionBar(toolbar);
+
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+
         initializeSideNav(toolbar);
+
+        touchCaptureLayer.setOnTouchListener(this);
     }
 
     @Override
@@ -54,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeSideNav(Toolbar mToolbar){
         ActionBarDrawerToggle drawerToggle;
-        NavigationView sideNavView;
+        final NavigationView sideNavView;
         final DrawerLayout drawerLayout = findViewById(R.id.layout_mainActivity);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.open, R.string.close);
 
@@ -87,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
                 switch(id)
                 {
                     case R.id.side_nav_receive:
-                        /*Start barcode activity*/
+                        getSupportActionBar().hide();
+                        navController.navigate(R.id.ReceiveFragment);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.side_nav_pay:
@@ -103,4 +126,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            float yOff = event.getY();
+            float xOff = event.getX();
+            currentExpediency = 1.0f/(event.getDownTime() - lastTouchTime);
+            lastTouchTime = event.getDownTime();
+            Log.d("Motion Event", "Touched At: (" + xOff + ", " + yOff + ", " + currentExpediency + ")");
+            return false;
+        }
+        return false;
+    }
 }

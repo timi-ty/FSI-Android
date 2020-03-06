@@ -13,7 +13,7 @@ android:layout_height="match_parent">
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
@@ -45,17 +45,24 @@ android:layout_height="match_parent">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<com.google.android.material.navigation.NavigationView
-    android:id="@+id/side_nav_view"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    app:headerLayout="@layout/header_side_nav"
-    app:itemIconTint="@android:color/secondary_text_light"
-    app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
-    app:itemTextColor="@android:color/secondary_text_light"
-    app:menu="@menu/menu_side_nav">
+    <FrameLayout
+        android:id="@+id/frame_gestureCapture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</com.google.android.material.navigation.NavigationView>
+    </FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/side_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header_side_nav"
+        app:itemIconTint="@android:color/secondary_text_light"
+        app:itemTextAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:itemTextColor="@android:color/secondary_text_light"
+        app:menu="@menu/menu_side_nav">
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
