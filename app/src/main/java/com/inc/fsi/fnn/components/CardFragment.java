@@ -73,8 +73,14 @@ public class CardFragment extends Fragment {
 
         TextView txtCardNumber = fragView.findViewById(R.id.txt_cardNumber);
         TextView txtCardAmount = fragView.findViewById(R.id.txt_cardBalance);
-
-        txtCardNumber.setText(generateRandomString(16));
+        String cardNumber = generateRandomString(16);
+        StringBuilder sb = new StringBuilder(cardNumber);
+        for(int i = 0 ; i < sb.length()-5; i++){
+            if (sb.charAt(i) != ' '){
+                sb.setCharAt(i,'*');
+            }
+        }
+        txtCardNumber.setText(sb.toString());
         String amount = generateRandomString(4);
         StringBuilder am = new StringBuilder(amount);
         am.insert(1, ",").insert(0, "$");

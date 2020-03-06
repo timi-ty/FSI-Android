@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -100,9 +102,8 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull TransactionViewHolder viewHolder, int position) {
-            if(position == 1){
+
                 viewHolder.bindView();
-            }
         }
 
         @Override
@@ -115,14 +116,33 @@ public class HomeFragment extends Fragment {
             TextView txtTransName;
             TextView txtTransDate;
             TextView txtTransAmount;
+            private final String DATA_FOR_RANDOM_STRING = "0123456789";
+            private SecureRandom random = new SecureRandom();
+            private ArrayList<String> txNames = new ArrayList<String>();
+
+
 
             TransactionViewHolder(@NonNull View itemView) {
                 super(itemView);
                 txtTransName = itemView.findViewById(R.id.txt_transName);
                 txtTransAmount = itemView.findViewById(R.id.txt_transAmount);
+                txNames.add("Slot Limited");
+                txNames.add("POS @ JustRite");
+                txNames.add("School Fees");
+                txNames.add("Chidi's Allowance");
+                txNames.add("Shopping Purchase");
+                txNames.add("Food - Casper's & Gambini's");
+                txNames.add("Airtime Purchase");
+                txNames.add("Vodka x2 ");
+            }
+
+            String getRandomArrayElement(){
+                int idx = random.nextInt(txNames.size());
+                return txNames.get(idx);
             }
 
             void bindView(){
+                txtTransName.setText(getRandomArrayElement());
                 txtTransName.setTextColor(getResources().getColor(R.color.colorAccent));
                 txtTransAmount.setTextColor(getResources().getColor(R.color.colorAccent));
             }
